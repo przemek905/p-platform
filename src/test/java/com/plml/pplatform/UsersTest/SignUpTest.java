@@ -1,7 +1,10 @@
 package com.plml.pplatform.UsersTest;
 
+import com.plml.pplatform.H2JpaConfig;
+import com.plml.pplatform.PPlatformApplication;
 import com.plml.pplatform.TestUtils.TestUtils;
 import com.plml.pplatform.Users.ApplicationUser;
+import com.plml.pplatform.Users.UserRepository;
 import com.plml.pplatform.Users.UserService;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
@@ -25,8 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = {PPlatformApplication.class, H2JpaConfig.class})
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class SignUpTest {
 
     @Autowired
@@ -34,6 +39,9 @@ public class SignUpTest {
 
     @MockBean
     private UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
