@@ -16,12 +16,12 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = "com.plml.pplatform.Users")
 @PropertySource("classpath:persistence-generic-entity.properties")
 @EnableTransactionManagement
-@Profile("test")
 public class H2JpaConfig {
     @Autowired
     private Environment env;
 
     @Bean
+    @Profile("test")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));

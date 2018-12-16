@@ -1,5 +1,6 @@
 package com.plml.pplatform.Users;
 
+import com.plml.pplatform.Exceptions.UserEmailAlreadyExistException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,7 +30,7 @@ public class UserUtils {
         ApplicationUser signingUser = userService.getUserByEmail(user.getEmail());
 
         if (signingUser != null) {
-            throw new SecurityException("This email address is already register in platform");
+            throw new UserEmailAlreadyExistException("This email address is already register in platform", 114);
         }
     }
 
