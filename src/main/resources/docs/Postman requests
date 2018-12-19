@@ -1,0 +1,21 @@
+Sign-on
+
+localhost:8981/users/sign-up
+
+{
+	"username" : "user",
+	"password" : "pass",
+	"email" : "user@wp.pl",
+	"name" : "User"
+}
+
+
+Login
+
+localhost:8981/login
+
+{
+	"username" : "przemek905",
+	"password" : "przemek92"
+}
+
