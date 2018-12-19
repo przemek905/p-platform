@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = UserExistValidator.class)
-@Target( { ElementType.FIELD })
+@Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserAlreadyExistConstrain {
     String message() default "User with that nickname already exist in database";

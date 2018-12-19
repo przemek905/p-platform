@@ -10,4 +10,9 @@ public class UsersConfiguration {
     public UserUtils userUtils(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         return new UserUtils(userService, bCryptPasswordEncoder);
     }
+
+    @Bean
+    UserService userService(UserRepository userRepository) {
+        return new UserService(userRepository);
+    }
 }
