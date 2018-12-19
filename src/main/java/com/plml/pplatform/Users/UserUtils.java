@@ -16,7 +16,7 @@ public class UserUtils {
     }
 
     public ApplicationUser createNewUser(@RequestBody ApplicationUser user) {
-        checkEmailExist(user);
+//        checkEmailExist(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userService.save(user);
     }
