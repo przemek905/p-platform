@@ -7,12 +7,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class UsersConfiguration {
     @Bean
-    public UserUtils userUtils(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        return new UserUtils(userService, bCryptPasswordEncoder);
+    public UserUtils userUtils(UserPlatformService userPlatformService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return new UserUtils(userPlatformService, bCryptPasswordEncoder);
     }
 
     @Bean
-    UserService userService(UserRepository userRepository) {
-        return new UserService(userRepository);
+    UserPlatformService userService(UserRepository userRepository) {
+        return new UserPlatformService(userRepository);
     }
 }

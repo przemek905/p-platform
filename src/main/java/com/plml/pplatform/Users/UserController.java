@@ -19,9 +19,6 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public ApplicationUser signUp(@RequestBody @Valid ApplicationUser user) {
-//    	if (userUtils.userAlreadyExists(user)) {
-//    		throw new UserAlreadyRegistredException("User already register in platform", 113);
-//    	}
 		return userUtils.createNewUser(user);
 	}
 

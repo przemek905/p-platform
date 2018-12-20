@@ -4,12 +4,10 @@ import com.plml.pplatform.H2JpaConfig;
 import com.plml.pplatform.PPlatformApplication;
 import com.plml.pplatform.TestUtils.TestUtils;
 import com.plml.pplatform.Users.ApplicationUser;
-import com.plml.pplatform.Users.UserService;
+import com.plml.pplatform.Users.UserPlatformService;
 import io.jsonwebtoken.MalformedJwtException;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -43,19 +41,16 @@ public class LoginTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
+    private UserPlatformService userPlatformService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void createUserInPlatform() {
         ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        userPlatformService.save(user);
     }
 
     @Test

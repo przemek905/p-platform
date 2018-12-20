@@ -1,6 +1,6 @@
 package com.plml.pplatform.Validations.Validators;
 
-import com.plml.pplatform.Users.UserService;
+import com.plml.pplatform.Users.UserPlatformService;
 import com.plml.pplatform.Validations.UserAlreadyExistConstrain;
 
 import javax.validation.ConstraintValidator;
@@ -8,13 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 
 public class UserExistValidator implements ConstraintValidator<UserAlreadyExistConstrain, String> {
 
-    public UserExistValidator() {
-    }
+    private UserPlatformService userPlatformService;
 
-    private UserService userService;
-
-    public UserExistValidator(UserService userService) {
-        this.userService = userService;
+    public UserExistValidator(UserPlatformService userPlatformService) {
+        this.userPlatformService = userPlatformService;
     }
 
     @Override
@@ -24,7 +21,7 @@ public class UserExistValidator implements ConstraintValidator<UserAlreadyExistC
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
-        return userService.getUserByUsername(username) != null;
+        return userPlatformService.getUserByUsername(username) == null;
     }
 
 

@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static java.util.Collections.emptyList;
 
-public class UserService implements UserDetailsService {
+public class UserPlatformService implements UserDetailsService {
     private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserPlatformService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

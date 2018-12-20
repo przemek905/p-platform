@@ -1,6 +1,6 @@
 package com.plml.pplatform.Exceptions;
 
-public class PPlatformException extends RuntimeException {
+public abstract class PPlatformException extends RuntimeException {
     protected int errCode;
 
     public PPlatformException(String message, int errCode) {
