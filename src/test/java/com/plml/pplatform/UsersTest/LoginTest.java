@@ -3,8 +3,8 @@ package com.plml.pplatform.UsersTest;
 import com.plml.pplatform.H2JpaConfig;
 import com.plml.pplatform.PPlatformApplication;
 import com.plml.pplatform.TestUtils.TestUtils;
-import com.plml.pplatform.Users.ApplicationUser;
-import com.plml.pplatform.Users.UserPlatformService;
+import com.plml.pplatform.users.ApplicationUser;
+import com.plml.pplatform.users.UserPlatformService;
 import io.jsonwebtoken.MalformedJwtException;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class LoginTest {
     public void createUserInPlatform() {
         ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userPlatformService.save(user);
+        userPlatformService.saveUser(user);
     }
 
     @Test

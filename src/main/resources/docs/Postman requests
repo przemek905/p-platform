@@ -1,6 +1,6 @@
 Sign-on
 
-localhost:8981/users/sign-up
+localhost:8981/signup
 
 {
 	"username" : "user",

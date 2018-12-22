@@ -1,7 +1,7 @@
-package com.plml.pplatform.Validations;
+package com.plml.pplatform.validations;
 
-import com.plml.pplatform.Users.UserPlatformService;
-import com.plml.pplatform.Validations.Validators.UserExistValidator;
+import com.plml.pplatform.users.UserPlatformService;
+import com.plml.pplatform.validations.validators.UserExistValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;

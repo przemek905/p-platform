@@ -1,6 +1,6 @@
-package com.plml.pplatform.Validations;
+package com.plml.pplatform.validations;
 
-import com.plml.pplatform.Validations.Validators.EmailExistValidator;
+import com.plml.pplatform.validations.validators.EmailExistValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

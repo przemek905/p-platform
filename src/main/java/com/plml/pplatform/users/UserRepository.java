@@ -1,4 +1,4 @@
-package com.plml.pplatform.Users;
+package com.plml.pplatform.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

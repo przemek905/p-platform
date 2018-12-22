@@ -1,4 +1,4 @@
-package com.plml.pplatform.Security;
+package com.plml.pplatform.security;
 
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.plml.pplatform.Security.SecurityConstants.HEADER_STRING;
-import static com.plml.pplatform.Security.SecurityConstants.SECRET;
-import static com.plml.pplatform.Security.SecurityConstants.TOKEN_PREFIX;
+import static com.plml.pplatform.security.SecurityConstants.HEADER_STRING;
+import static com.plml.pplatform.security.SecurityConstants.SECRET;
+import static com.plml.pplatform.security.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

@@ -1,18 +1,26 @@
-package com.plml.pplatform.Users;
+package com.plml.pplatform.users;
 
-import com.plml.pplatform.Validations.EmailAlreadyExistConstrain;
-import com.plml.pplatform.Validations.UserAlreadyExistConstrain;
+import com.plml.pplatform.validations.EmailAlreadyExistConstrain;
+import com.plml.pplatform.validations.UserAlreadyExistConstrain;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "application_user")
-public class ApplicationUser {
+public class ApplicationUser implements UserDetails {
 
     public ApplicationUser() {
+        super();
+        this.enabled = false;
     }
 
     public ApplicationUser(long id, String username, String password, String email, String name) {
@@ -43,6 +51,20 @@ public class ApplicationUser {
     @NotNull(message = "User name is not specify")
     @Size(min = 1, max = 12, message = "User name length should beeb between 1 and 12")
     private String name;
+
+    private boolean enabled;
+
+    private String role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+        String ROLE_PREFIX = "PPLATFORM_";
+        authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));
+
+        return authorities;
+    }
     
     public long getId() {
         return id;
@@ -51,6 +73,21 @@ public class ApplicationUser {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
     public void setUsername(String username) {
@@ -79,5 +116,13 @@ public class ApplicationUser {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

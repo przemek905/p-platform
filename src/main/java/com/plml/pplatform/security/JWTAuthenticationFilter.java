@@ -1,7 +1,7 @@
-package com.plml.pplatform.Security;
+package com.plml.pplatform.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.plml.pplatform.Users.ApplicationUser;
+import com.plml.pplatform.users.ApplicationUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.plml.pplatform.Security.SecurityConstants.*;
+import static com.plml.pplatform.security.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;

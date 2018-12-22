@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.plml.pplatform.Users")
+@EnableJpaRepositories(basePackages = "com.plml.pplatform.users")
 @PropertySource("classpath:persistence-generic-entity.properties")
 @EnableTransactionManagement
 public class H2JpaConfig {

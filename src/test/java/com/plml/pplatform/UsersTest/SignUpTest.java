@@ -3,8 +3,8 @@ package com.plml.pplatform.UsersTest;
 import com.plml.pplatform.H2JpaConfig;
 import com.plml.pplatform.PPlatformApplication;
 import com.plml.pplatform.TestUtils.TestUtils;
-import com.plml.pplatform.Users.ApplicationUser;
-import com.plml.pplatform.Users.UserPlatformService;
+import com.plml.pplatform.users.ApplicationUser;
+import com.plml.pplatform.users.UserPlatformService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +42,12 @@ public class SignUpTest {
         ApplicationUser newUser = new ApplicationUser(1, "testuser", "testpassword", "testmail@vp.pl", "test");
         when(userPlatformService.getUserByUsername(newUser.getUsername())).thenReturn(null);
         when(userPlatformService.getUserByEmail(newUser.getEmail())).thenReturn(null);
-        when(userPlatformService.save(any())).thenReturn(newUser);
+        when(userPlatformService.saveUser(any())).thenReturn(newUser);
 
         String requestJson = TestUtils.makeJsonFromObject(newUser);
 
         //when
-        this.mockMvc.perform(post("/users/sign-up")
+        this.mockMvc.perform(post("/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
             .andDo(print())
@@ -55,7 +55,7 @@ public class SignUpTest {
             .andExpect(content().string(containsString("testuser")));
 
         //then
-        verify(userPlatformService, times(1)).save(any());
+        verify(userPlatformService, times(1)).saveUser(any());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class SignUpTest {
         String requestJson = TestUtils.makeJsonFromObject(existingUser);
 
         //when
-        this.mockMvc.perform(post("/users/sign-up")
+        this.mockMvc.perform(post("/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(status().isBadRequest())
@@ -84,7 +84,7 @@ public class SignUpTest {
         String requestJson = TestUtils.makeJsonFromObject(userWithExistingEmail);
 
         //when
-            this.mockMvc.perform(post("/users/sign-up")
+            this.mockMvc.perform(post("/signup")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(requestJson))
                     .andExpect(status().isBadRequest())

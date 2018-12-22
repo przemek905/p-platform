@@ -1,11 +1,9 @@
-package com.plml.pplatform.Users;
+package com.plml.pplatform.users;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import static java.util.Collections.emptyList;
 
 public class UserPlatformService implements UserDetailsService {
     private UserRepository userRepository;
@@ -20,7 +18,8 @@ public class UserPlatformService implements UserDetailsService {
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
+        return new User(applicationUser.getUsername(), applicationUser.getPassword(), applicationUser.isEnabled(),
+                applicationUser.isAccountNonExpired(), applicationUser.isCredentialsNonExpired(), applicationUser.isAccountNonLocked(), applicationUser.getAuthorities());
     }
 
     public ApplicationUser getUserByUsername(String username) {
@@ -31,7 +30,8 @@ public class UserPlatformService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
-    public ApplicationUser save(ApplicationUser user) {
+    public ApplicationUser saveUser(ApplicationUser user) {
         return userRepository.save(user);
     }
+
 }

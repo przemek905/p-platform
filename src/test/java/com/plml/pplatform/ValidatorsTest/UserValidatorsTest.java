@@ -2,8 +2,8 @@ package com.plml.pplatform.ValidatorsTest;
 
 import com.plml.pplatform.H2JpaConfig;
 import com.plml.pplatform.PPlatformApplication;
-import com.plml.pplatform.Users.ApplicationUser;
-import com.plml.pplatform.Users.UserPlatformService;
+import com.plml.pplatform.users.ApplicationUser;
+import com.plml.pplatform.users.UserPlatformService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UserValidatorsTest {
         // given
         String login = "testuser";
         ApplicationUser predefinedUser = new ApplicationUser(1, login, "testpassword", "testmail@vp.pl", "test");
-        userPlatformService.save(predefinedUser);
+        userPlatformService.saveUser(predefinedUser);
         // when
         ApplicationUser newUser = new ApplicationUser(1, login, "anothertestpassword2", "anothertestmail2@vp.pl", "test");
         Set<ConstraintViolation<ApplicationUser>> violations = validator.validate(newUser);
@@ -47,7 +47,7 @@ public class UserValidatorsTest {
         // given
         String email = "testuser@pp.pl";
         ApplicationUser predefinedUser = new ApplicationUser(1, "user", "testpassword", email, "test");
-        userPlatformService.save(predefinedUser);
+        userPlatformService.saveUser(predefinedUser);
         // when
         ApplicationUser newUser = new ApplicationUser(1, "newUser", "anothertestpassword2", email, "test");
         Set<ConstraintViolation<ApplicationUser>> violations = validator.validate(newUser);

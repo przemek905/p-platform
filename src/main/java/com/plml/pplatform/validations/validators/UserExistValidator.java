@@ -1,7 +1,7 @@
-package com.plml.pplatform.Validations.Validators;
+package com.plml.pplatform.validations.validators;
 
-import com.plml.pplatform.Users.UserPlatformService;
-import com.plml.pplatform.Validations.UserAlreadyExistConstrain;
+import com.plml.pplatform.users.UserPlatformService;
+import com.plml.pplatform.validations.UserAlreadyExistConstrain;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
