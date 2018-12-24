@@ -16,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,11 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {PPlatformApplication.class, H2JpaConfig.class})
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RegistrationTest {
 
-    public static final String VALID_TOKEN = "valid_token";
-    public static final String INVALID_TOKEN = "invalid_token";
+    private static final String VALID_TOKEN = "valid_token";
+    private static final String INVALID_TOKEN = "invalid_token";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -68,7 +67,7 @@ public class RegistrationTest {
     @Test
     public void shouldSuccessRegister() throws Exception {
         //when
-        this.mockMvc.perform(get("/regitrationConfirm")
+        this.mockMvc.perform(get("/registrationConfirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("token", VALID_TOKEN))
                 .andDo(print())
@@ -80,7 +79,7 @@ public class RegistrationTest {
     @Test
     public void shouldNotRegisterUserWithInvalidToken() throws Exception {
         //when
-        this.mockMvc.perform(get("/regitrationConfirm")
+        this.mockMvc.perform(get("/registrationConfirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("token", INVALID_TOKEN))
                 .andDo(print())
@@ -97,11 +96,11 @@ public class RegistrationTest {
         verificationTokenRepository.save(token);
 
         //when
-        this.mockMvc.perform(get("/regitrationConfirm")
+        this.mockMvc.perform(get("/registrationConfirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("token", VALID_TOKEN))
                 .andDo(print())
-                .andExpect(status().isNotAcceptable())
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("Activation link is expired after 24 hours. To register please contact support")));
 
     }

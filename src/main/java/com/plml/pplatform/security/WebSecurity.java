@@ -12,12 +12,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
-import static com.plml.pplatform.security.SecurityConstants.SIGN_UP_URL;
+import static com.plml.pplatform.security.SecurityConstants.*;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
-    public static final String REGITRATION_CONFIRM_URL = "/regitrationConfirm";
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -30,7 +28,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.GET, REGITRATION_CONFIRM_URL).permitAll()
+                .antMatchers(HttpMethod.GET, REGISTRATION_CONFIRM_URL).permitAll()
+                .antMatchers(HttpMethod.GET, USER_RESET_PASSWORD_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

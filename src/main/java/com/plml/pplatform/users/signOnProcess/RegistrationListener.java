@@ -15,14 +15,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.plml.pplatform.email.EmailConstants.APP_PREFIX;
+import static com.plml.pplatform.email.EmailConstants.CONFIRM_MESSAGE_TEMPLATE;
+
 public class RegistrationListener implements
         ApplicationListener<OnRegistrationCompleteEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationListener.class);
 
-
-    private static final String CONFIRM_MESSAGE_TEMPLATE = "Welcome to the PPlatform! \n To activate your account please go to this link:\n";
-    private static final String APP_PREFIX = "/pplatform/";
     @Value("${registration.hostAddress}")
     private String hostAddress;
 
@@ -50,7 +50,7 @@ public class RegistrationListener implements
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = hostAddress + "/regitrationConfirm.html?token=" + token;
+        String confirmationUrl = hostAddress + "/registrationConfirm.html?token=" + token;
         String message = CONFIRM_MESSAGE_TEMPLATE + "\n" + hostAddress + APP_PREFIX + confirmationUrl;
 
         SimpleMailMessage email = EmailUtils.createEmail(recipientAddress, subject, message);

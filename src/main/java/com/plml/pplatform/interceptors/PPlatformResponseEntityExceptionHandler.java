@@ -1,9 +1,6 @@
 package com.plml.pplatform.interceptors;
 
-import com.plml.pplatform.exceptions.ConstrainPPlatformCodes;
-import com.plml.pplatform.exceptions.PPlatformErrorCodes;
-import com.plml.pplatform.exceptions.TokenExpiredException;
-import com.plml.pplatform.exceptions.TokenNotExistException;
+import com.plml.pplatform.exceptions.*;
 import com.plml.pplatform.http.ConstrainPPlatformResponse;
 import com.plml.pplatform.http.PPlatformResponse;
 import org.slf4j.Logger;
@@ -25,26 +22,16 @@ import java.util.stream.Collectors;
 public class PPlatformResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(PPlatformResponseEntityExceptionHandler.class);
 
-    @ExceptionHandler({TokenNotExistException.class})
+    @ExceptionHandler({TokenNotExistException.class, TokenExpiredException.class, InvalidOldPasswordException.class})
     public ResponseEntity<?> handleTokenNotExist(RuntimeException ex, WebRequest request) {
-        LOGGER.info("Token not exist exception.");
+        LOGGER.info("Handle business exception");
+        PPlatformException exception = (PPlatformException) ex;
 
-        PPlatformResponse platformResponse = new PPlatformResponse(ex.getMessage(), "Token not found",
-                PPlatformErrorCodes.TOKEN_NOT_EXIST.getErrorCode());
+        PPlatformResponse platformResponse = new PPlatformResponse(exception.getMessage(), "Token not found",
+                exception.getErrCode());
 
         return handleExceptionInternal(
                 ex, platformResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-    }
-
-    @ExceptionHandler({TokenExpiredException.class})
-    public ResponseEntity<?> handleTokenExpired(RuntimeException ex, WebRequest request) {
-        LOGGER.info("Token expired exception.");
-
-        PPlatformResponse platformResponse = new PPlatformResponse(ex.getMessage(), "Token expired",
-                PPlatformErrorCodes.TOKEN_EXPIRED.getErrorCode());
-
-        return handleExceptionInternal(
-                ex, platformResponse, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
     }
 
     @Override

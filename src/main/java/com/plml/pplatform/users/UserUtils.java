@@ -18,7 +18,8 @@ public class UserUtils {
 
 
     public UserUtils(UserPlatformService userPlatformService,
-                     BCryptPasswordEncoder bCryptPasswordEncoder, VerificationTokenRepository verificationTokenRepository) {
+                     BCryptPasswordEncoder bCryptPasswordEncoder,
+                     VerificationTokenRepository verificationTokenRepository) {
         this.userPlatformService = userPlatformService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.verificationTokenRepository = verificationTokenRepository;
@@ -30,6 +31,13 @@ public class UserUtils {
         return userPlatformService.saveUser(user);
     }
 
+    public ApplicationUser updateUserPassword(@RequestBody ApplicationUser user, String newPassword, boolean isReset) {
+        LOGGER.info("Updating user password with username: {} and email: {}", user.getUsername(), user.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        user.setPasswordReseted(isReset);
+        return userPlatformService.saveUser(user);
+    }
+
     public VerificationToken getVerificationTokenByToken(String token) {
         return verificationTokenRepository.findByToken(token);
     }
@@ -38,4 +46,10 @@ public class UserUtils {
         return userPlatformService.saveUser(user);
     }
 
+    public boolean isValidOldPassword(ApplicationUser user, String oldPassword) {
+        if (user.getPassword() != null || !user.getPassword().isEmpty()) {
+            return bCryptPasswordEncoder.matches(oldPassword, user.getPassword());
+        }
+        return false;
+    }
 }
