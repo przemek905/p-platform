@@ -30,7 +30,7 @@ public class UserController {
 		return userUtils.createNewUser(user);
 	}
 
-    @GetMapping(value = "/regitrationConfirm")
+    @GetMapping("/regitrationConfirm")
     public ApplicationUser confirmRegistration(@RequestParam("token") String token) {
         VerificationToken verificationToken = userUtils.getVerificationTokenByToken(token);
         if (verificationToken == null) {

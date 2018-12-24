@@ -33,10 +33,10 @@ public class RegistrationListener implements
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
-        this.confirmRegistration(event);
+        this.sendRegistrationEmail(event);
     }
 
-    private void confirmRegistration(OnRegistrationCompleteEvent event) {
+    private void sendRegistrationEmail(OnRegistrationCompleteEvent event) {
         ApplicationUser user = event.getApplicationUser();
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = createVerificationToken(user, token);

@@ -1,11 +1,11 @@
 package com.plml.pplatform.exceptions;
 
-public enum PPlatformErrorCodes {
-    TOKEN_NOT_EXIST(211), TOKEN_EXPIRED(212), BINDING_EXCEPTION(700);
+public enum ConstrainPPlatformCodes {
+    username(711), email(712);
 
     private int errorCode;
 
-    PPlatformErrorCodes(int errorCode) {
+    ConstrainPPlatformCodes(int errorCode) {
         this.errorCode = errorCode;
     }
 

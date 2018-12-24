@@ -1,5 +1,6 @@
 package com.plml.pplatform.users;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.plml.pplatform.validations.EmailAlreadyExistConstrain;
 import com.plml.pplatform.validations.UserAlreadyExistConstrain;
 import org.springframework.security.core.GrantedAuthority;
@@ -53,12 +54,15 @@ public class ApplicationUser implements UserDetails {
     private String name;
 
     private boolean enabled;
-
     private String role;
+    private boolean credentialsNonExpired;
+    private boolean accountNonLocked;
+    private boolean accountNonExpired;
 
     @Override
+    @JsonDeserialize(using = GrantedAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
         String ROLE_PREFIX = "PPLATFORM_";
         authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));

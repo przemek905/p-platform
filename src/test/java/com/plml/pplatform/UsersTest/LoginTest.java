@@ -56,6 +56,9 @@ public class LoginTest {
     @Test
     public void shouldSuccessLoginToPlatform() throws Exception {
         //given
+        ApplicationUser savedUser = userPlatformService.getUserByUsername("testuser");
+        savedUser.setEnabled(true);
+        userPlatformService.saveUser(savedUser);
         ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
@@ -91,6 +94,9 @@ public class LoginTest {
     @Test
     public void shouldAccessToOtherURLAlreadyLoginUser() throws Exception {
         //given
+        ApplicationUser savedUser = userPlatformService.getUserByUsername("testuser");
+        savedUser.setEnabled(true);
+        userPlatformService.saveUser(savedUser);
         ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
 
         String requestJson = TestUtils.makeJsonFromObject(user);

@@ -35,6 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));
+                //TODO
+//                .exceptionHandling().accessDeniedPage("/my-error-page");
     }
 
     @Override
