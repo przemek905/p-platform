@@ -2,6 +2,7 @@ package com.plml.pplatform.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plml.pplatform.users.ApplicationUser;
+import com.plml.pplatform.users.UserPlatformService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,9 +24,11 @@ import static com.plml.pplatform.security.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+    private UserPlatformService userPlatformService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserPlatformService userPlatformService) {
         this.authenticationManager = authenticationManager;
+        this.userPlatformService = userPlatformService;
     }
 
     @Override
@@ -57,6 +60,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
-        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        res.addHeader(AUTHORIZATION_HEADER_STRING, TOKEN_PREFIX + token);
+
+        ApplicationUser user = userPlatformService.getUserByUsername(((User) auth.getPrincipal()).getUsername());
+        if (user.isPasswordReseted()) {
+            res.addHeader(RESET_PASSWORD_HEADER_STRING, "true");
+        }
     }
 }

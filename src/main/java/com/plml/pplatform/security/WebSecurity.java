@@ -1,5 +1,6 @@
 package com.plml.pplatform.security;
 
+import com.plml.pplatform.users.UserPlatformService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,10 +19,13 @@ import static com.plml.pplatform.security.SecurityConstants.*;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserPlatformService userPlatformService;
 
-    public WebSecurity(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurity(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder,
+                       UserPlatformService userPlatformService) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userPlatformService = userPlatformService;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, USER_RESET_PASSWORD_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), userPlatformService))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));
                 //TODO
 //                .exceptionHandling().accessDeniedPage("/my-error-page");
