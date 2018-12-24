@@ -2,10 +2,15 @@ package com.plml.pplatform.users;
 
 import com.plml.pplatform.users.signOnProcess.verificationtoken.VerificationToken;
 import com.plml.pplatform.users.signOnProcess.verificationtoken.VerificationTokenRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public class UserUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserUtils.class);
+
 
     private UserPlatformService userPlatformService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -20,6 +25,7 @@ public class UserUtils {
     }
 
     public ApplicationUser createNewUser(@RequestBody ApplicationUser user) {
+        LOGGER.info("Creating new user with username: {} and email: {}", user.getUsername(), user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userPlatformService.saveUser(user);
     }

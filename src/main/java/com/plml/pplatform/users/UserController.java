@@ -5,6 +5,8 @@ import com.plml.pplatform.exceptions.TokenExpiredException;
 import com.plml.pplatform.exceptions.TokenNotExistException;
 import com.plml.pplatform.users.signOnProcess.OnRegistrationCompleteEvent;
 import com.plml.pplatform.users.signOnProcess.verificationtoken.VerificationToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,10 @@ import java.util.Calendar;
 @RestController
 public class UserController {
 
-	private UserUtils userUtils;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
+
+    private UserUtils userUtils;
 
 	@Autowired
     ApplicationEventPublisher eventPublisher;
@@ -26,12 +31,14 @@ public class UserController {
 
     @PostMapping("/signup")
     public ApplicationUser signup(@RequestBody @Valid ApplicationUser user) {
+        ApplicationUser newUser = userUtils.createNewUser(user);
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
-		return userUtils.createNewUser(user);
+        return newUser;
 	}
 
     @GetMapping("/regitrationConfirm")
     public ApplicationUser confirmRegistration(@RequestParam("token") String token) {
+        LOGGER.info("Activate user account by verification token");
         VerificationToken verificationToken = userUtils.getVerificationTokenByToken(token);
         if (verificationToken == null) {
             throw new TokenNotExistException("Verification link is invalid. Please check correct copy of verification token at the end of the URL link.", PPlatformErrorCodes.TOKEN_NOT_EXIST.getErrorCode());
