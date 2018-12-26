@@ -58,7 +58,7 @@ public class ApplicationUser implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
     private boolean accountNonExpired;
-    private boolean passwordReseted;
+    private boolean passwordReset;
 
     @Override
     @JsonDeserialize(using = GrantedAuthorityDeserializer.class)
@@ -131,11 +131,11 @@ public class ApplicationUser implements UserDetails {
         this.enabled = enabled;
     }
 
-    public boolean isPasswordReseted() {
-        return passwordReseted;
+    public boolean isPasswordReset() {
+        return passwordReset;
     }
 
-    public void setPasswordReseted(boolean passwordReseted) {
-        this.passwordReseted = passwordReseted;
+    public void setPasswordReset(boolean passwordReset) {
+        this.passwordReset = passwordReset;
     }
 }

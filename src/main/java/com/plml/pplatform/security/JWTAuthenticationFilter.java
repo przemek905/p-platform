@@ -26,7 +26,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private AuthenticationManager authenticationManager;
     private UserPlatformService userPlatformService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserPlatformService userPlatformService) {
+    public JWTAuthenticationFilter(String loginpath, AuthenticationManager authenticationManager, UserPlatformService userPlatformService) {
+        this.setFilterProcessesUrl(loginpath);
         this.authenticationManager = authenticationManager;
         this.userPlatformService = userPlatformService;
     }
@@ -63,7 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         res.addHeader(AUTHORIZATION_HEADER_STRING, TOKEN_PREFIX + token);
 
         ApplicationUser user = userPlatformService.getUserByUsername(((User) auth.getPrincipal()).getUsername());
-        if (user.isPasswordReseted()) {
+        if (user.isPasswordReset()) {
             res.addHeader(RESET_PASSWORD_HEADER_STRING, "true");
         }
     }

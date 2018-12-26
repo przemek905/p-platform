@@ -15,7 +15,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.plml.pplatform.email.EmailConstants.APP_PREFIX;
 import static com.plml.pplatform.email.EmailConstants.CONFIRM_MESSAGE_TEMPLATE;
 
 public class RegistrationListener implements
@@ -27,12 +26,10 @@ public class RegistrationListener implements
     private String hostAddress;
 
     private JavaMailSender mailSender;
-    private EmailUtils emailUtils;
     private VerificationTokenRepository verificationTokenRepository;
 
-    public RegistrationListener(JavaMailSender mailSender, EmailUtils emailUtils, VerificationTokenRepository verificationTokenRepository) {
+    public RegistrationListener(JavaMailSender mailSender, VerificationTokenRepository verificationTokenRepository) {
         this.mailSender = mailSender;
-        this.emailUtils = emailUtils;
         this.verificationTokenRepository = verificationTokenRepository;
     }
 
@@ -50,8 +47,8 @@ public class RegistrationListener implements
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = hostAddress + "/registrationConfirm.html?token=" + token;
-        String message = CONFIRM_MESSAGE_TEMPLATE + "\n" + hostAddress + APP_PREFIX + confirmationUrl;
+        String confirmationUrl = hostAddress + "/pplatform/registrationConfirm?token=" + token.trim();
+        String message = CONFIRM_MESSAGE_TEMPLATE + "\n\n" + confirmationUrl + "\n";
 
         SimpleMailMessage email = EmailUtils.createEmail(recipientAddress, subject, message);
 

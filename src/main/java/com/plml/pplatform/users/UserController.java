@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import static com.plml.pplatform.email.EmailConstants.RESET_MESSAGE_TEMPLATE;
 import static com.plml.pplatform.security.SecurityConstants.CHARACTERS;
 
 @RestController
+@RequestMapping("/pplatform")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -44,6 +46,7 @@ public class UserController {
         this.mailSender = mailSender;
     }
 
+    @Transactional
     @PostMapping("/signup")
     public ApplicationUser signup(@RequestBody @Valid ApplicationUser user) {
         ApplicationUser newUser = userUtils.createNewUser(user);

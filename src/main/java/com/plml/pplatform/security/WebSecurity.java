@@ -36,7 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, USER_RESET_PASSWORD_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), userPlatformService))
+                .addFilter(new JWTAuthenticationFilter("/pplatform/login", authenticationManager(), userPlatformService))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));
                 //TODO
 //                .exceptionHandling().accessDeniedPage("/my-error-page");
@@ -59,4 +59,5 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     source.registerCorsConfiguration("/**", applyPermitDefaultValues);
     return source;
   }
+
 }

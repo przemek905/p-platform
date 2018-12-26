@@ -34,7 +34,7 @@ public class UserUtils {
     public ApplicationUser updateUserPassword(@RequestBody ApplicationUser user, String newPassword, boolean isReset) {
         LOGGER.info("Updating user password with username: {} and email: {}", user.getUsername(), user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        user.setPasswordReseted(isReset);
+        user.setPasswordReset(isReset);
         return userPlatformService.saveUser(user);
     }
 
