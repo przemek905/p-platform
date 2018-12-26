@@ -13,15 +13,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.plml.pplatform.Users")
+@EnableJpaRepositories(basePackages = "com.plml.pplatform.users")
 @PropertySource("classpath:persistence-generic-entity.properties")
 @EnableTransactionManagement
-@Profile("test")
 public class H2JpaConfig {
     @Autowired
     private Environment env;
 
     @Bean
+    @Profile("test")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
