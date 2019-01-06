@@ -48,7 +48,7 @@ public class LoginTest {
 
     @Before
     public void createUserInPlatform() {
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userPlatformService.saveUser(user);
     }
@@ -59,7 +59,7 @@ public class LoginTest {
         ApplicationUser savedUser = userPlatformService.getUserByUsername("testuser");
         savedUser.setEnabled(true);
         userPlatformService.saveUser(savedUser);
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 
@@ -77,7 +77,7 @@ public class LoginTest {
     @Test
     public void shouldFailedLoginToPlatformWithWrongPassword() throws Exception {
         //given
-        ApplicationUser user = new ApplicationUser(1, "testuser", WRONG_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", WRONG_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 
@@ -97,7 +97,7 @@ public class LoginTest {
         ApplicationUser savedUser = userPlatformService.getUserByUsername("testuser");
         savedUser.setEnabled(true);
         userPlatformService.saveUser(savedUser);
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 

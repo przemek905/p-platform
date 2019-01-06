@@ -48,7 +48,7 @@ public class SignUpTest {
     @Test
     public void shouldSuccefullySignUpNewUser() throws Exception {
         //given
-        ApplicationUser newUser = new ApplicationUser(1, "testuser", "testpassword", "testmail@vp.pl", "test");
+        ApplicationUser newUser = new ApplicationUser(1, "testuser", "testpassword", "testmail@vp.pl", "test", "role");
         when(userPlatformService.getUserByUsername(newUser.getUsername())).thenReturn(null);
         when(userPlatformService.getUserByEmail(newUser.getEmail())).thenReturn(null);
         when(userPlatformService.saveUser(any())).thenReturn(newUser);
@@ -72,7 +72,7 @@ public class SignUpTest {
     @Test
     public void shouldNotSignUpExistingUser() throws Exception {
         //given
-        ApplicationUser existingUser = new ApplicationUser(1, "testuser", "testpassword", "testmail@vp.pl", "test");
+        ApplicationUser existingUser = new ApplicationUser(1, "testuser", "testpassword", "testmail@vp.pl", "test", "role");
         when(userPlatformService.getUserByUsername(existingUser.getUsername())).thenReturn(existingUser);
 
         String requestJson = TestUtils.makeJsonFromObject(existingUser);
@@ -89,7 +89,7 @@ public class SignUpTest {
     public void shouldNotSignUpUserWithExistingEmail() throws Exception {
         //given
         ApplicationUser userWithExistingEmail = new ApplicationUser(1, "testuser", "testpassword", "testmail@vp.pl",
-                "test");
+                "test", "role");
         when(userPlatformService.getUserByUsername(userWithExistingEmail.getUsername())).thenReturn(null);
         when(userPlatformService.getUserByEmail(userWithExistingEmail.getEmail())).thenReturn(userWithExistingEmail);
 

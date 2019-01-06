@@ -22,14 +22,16 @@ public class ApplicationUser implements UserDetails {
     public ApplicationUser() {
         super();
         this.enabled = false;
+        this.role = "USER";
     }
 
-    public ApplicationUser(long id, String username, String password, String email, String name) {
+    public ApplicationUser(long id, String username, String password, String email, String name, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
+        this.role = role;
     }
 
     @Id
@@ -65,7 +67,7 @@ public class ApplicationUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        String ROLE_PREFIX = "PPLATFORM_";
+        String ROLE_PREFIX = "ROLE_";
         authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));
 
         return authorities;
@@ -137,5 +139,13 @@ public class ApplicationUser implements UserDetails {
 
     public void setPasswordReset(boolean passwordReset) {
         this.passwordReset = passwordReset;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

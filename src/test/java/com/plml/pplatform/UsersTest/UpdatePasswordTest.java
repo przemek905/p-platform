@@ -47,7 +47,7 @@ public class UpdatePasswordTest {
 
     @Before
     public void createUserInPlatform() {
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         userPlatformService.saveUser(user);
@@ -56,7 +56,7 @@ public class UpdatePasswordTest {
     @Test
     public void shouldUpdatePasswordWhenLogged() throws Exception {
         //given
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 
@@ -87,7 +87,7 @@ public class UpdatePasswordTest {
     @Test
     public void shouldNotUpdatePasswordWhenOldPasswordInvalid() throws Exception {
         //given
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 

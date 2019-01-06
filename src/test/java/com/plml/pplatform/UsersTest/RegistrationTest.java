@@ -52,7 +52,7 @@ public class RegistrationTest {
 
     @Before
     public void createUserAndTokenInPlatform() {
-            ApplicationUser user = new ApplicationUser(1, "testuser", "testuserpass", "testmail@vp.pl", "test");
+            ApplicationUser user = new ApplicationUser(1, "testuser", "testuserpass", "testmail@vp.pl", "test", "role");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             VerificationToken verificationToken = createVerificationToken(user, VALID_TOKEN);

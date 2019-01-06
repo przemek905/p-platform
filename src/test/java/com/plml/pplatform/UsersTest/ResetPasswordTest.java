@@ -52,7 +52,7 @@ public class ResetPasswordTest {
 
     @Before
     public void createUserInPlatform() {
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, VALID_EMAIL, "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, VALID_EMAIL, "test", "role");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         userPlatformService.saveUser(user);

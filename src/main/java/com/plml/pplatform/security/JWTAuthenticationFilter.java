@@ -3,6 +3,7 @@ package com.plml.pplatform.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plml.pplatform.users.ApplicationUser;
 import com.plml.pplatform.users.UserPlatformService;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static com.plml.pplatform.security.SecurityConstants.*;
 
@@ -56,8 +58,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
+        Claims claims = Jwts.claims().setSubject(((User) auth.getPrincipal()).getUsername());
+        claims.put("roles", ((User) auth.getPrincipal()).getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
+
         String token = Jwts.builder()
-                .setSubject(((User) auth.getPrincipal()).getUsername())
+//                .setSubject(((User) auth.getPrincipal()).getUsername())
+                .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
