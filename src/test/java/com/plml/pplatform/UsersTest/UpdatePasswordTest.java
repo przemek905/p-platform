@@ -61,7 +61,7 @@ public class UpdatePasswordTest {
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //login first
-        MvcResult result = this.mockMvc.perform(post("/login")
+        MvcResult result = this.mockMvc.perform(post("/pplatform/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -74,7 +74,7 @@ public class UpdatePasswordTest {
         String authorizationToken = result.getResponse().getHeader(AUTHORIZATION_HEADER);
 
         //when
-        this.mockMvc.perform(get("/user/updatePassword")
+        this.mockMvc.perform(get("/pplatform//user/updatePassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION_HEADER, TOKEN_PREFIX + authorizationToken)
                 .param("password", NEW_PASSWORD)
@@ -92,7 +92,7 @@ public class UpdatePasswordTest {
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //login first
-        MvcResult result = this.mockMvc.perform(post("/login")
+        MvcResult result = this.mockMvc.perform(post("/pplatform/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -105,7 +105,7 @@ public class UpdatePasswordTest {
         String authorizationToken = result.getResponse().getHeader(AUTHORIZATION_HEADER);
 
         //when
-        this.mockMvc.perform(get("/user/updatePassword")
+        this.mockMvc.perform(get("/pplatform/user/updatePassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION_HEADER, TOKEN_PREFIX + authorizationToken)
                 .param("password", NEW_PASSWORD)
@@ -119,7 +119,7 @@ public class UpdatePasswordTest {
     public void shouldNotUpdatePasswordWhenNotLogin() throws Exception {
 
         //when
-        this.mockMvc.perform(get("/user/updatePassword")
+        this.mockMvc.perform(get("/pplatform/user/updatePassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("password", NEW_PASSWORD)
                 .param("oldPassword", INVAID_PASSWORD))

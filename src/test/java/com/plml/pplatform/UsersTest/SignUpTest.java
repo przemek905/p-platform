@@ -57,7 +57,7 @@ public class SignUpTest {
         String requestJson = TestUtils.makeJsonFromObject(newUser);
 
         //when
-        this.mockMvc.perform(post("/signup")
+        this.mockMvc.perform(post("/pplatform/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -78,7 +78,7 @@ public class SignUpTest {
         String requestJson = TestUtils.makeJsonFromObject(existingUser);
 
         //when
-        this.mockMvc.perform(post("/signup")
+        this.mockMvc.perform(post("/pplatform/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(status().isBadRequest())
@@ -96,7 +96,7 @@ public class SignUpTest {
         String requestJson = TestUtils.makeJsonFromObject(userWithExistingEmail);
 
         //when
-        this.mockMvc.perform(post("/signup")
+        this.mockMvc.perform(post("/pplatform/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(status().isBadRequest())

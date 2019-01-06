@@ -64,7 +64,7 @@ public class LoginTest {
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //when
-        this.mockMvc.perform(post("/login")
+        this.mockMvc.perform(post("/pplatform/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -82,7 +82,7 @@ public class LoginTest {
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //when
-        this.mockMvc.perform(post("/login")
+        this.mockMvc.perform(post("/pplatform/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -102,7 +102,7 @@ public class LoginTest {
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //login first
-        MvcResult result = this.mockMvc.perform(post("/login")
+        MvcResult result = this.mockMvc.perform(post("/pplatform/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -115,7 +115,7 @@ public class LoginTest {
         String authorizationToken = result.getResponse().getHeader(AUTHORIZATION_HEADER);
 
         //when
-        this.mockMvc.perform(get("/")
+        this.mockMvc.perform(get("/pplatform/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION_HEADER, TOKEN_PREFIX + authorizationToken))
                 .andDo(print())
@@ -127,7 +127,7 @@ public class LoginTest {
     public void shouldDeniedAccessToOtherURLWithoutToken() throws Exception {
 
         //when
-        this.mockMvc.perform(get("/")
+        this.mockMvc.perform(get("/pplatform/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isForbidden())
@@ -138,7 +138,7 @@ public class LoginTest {
     public void shouldDeniedAccessToOtherURLWithInvalidToken() throws Exception {
 
         //when
-        this.mockMvc.perform(get("/")
+        this.mockMvc.perform(get("/pplatform/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION_HEADER, TOKEN_PREFIX + "invalid.token.value"))
                 .andDo(print());

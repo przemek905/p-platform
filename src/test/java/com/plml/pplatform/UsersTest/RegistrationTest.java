@@ -67,7 +67,7 @@ public class RegistrationTest {
     @Test
     public void shouldSuccessRegister() throws Exception {
         //when
-        this.mockMvc.perform(get("/registrationConfirm")
+        this.mockMvc.perform(get("/pplatform/registrationConfirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("token", VALID_TOKEN))
                 .andDo(print())
@@ -79,7 +79,7 @@ public class RegistrationTest {
     @Test
     public void shouldNotRegisterUserWithInvalidToken() throws Exception {
         //when
-        this.mockMvc.perform(get("/registrationConfirm")
+        this.mockMvc.perform(get("/pplatform/registrationConfirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("token", INVALID_TOKEN))
                 .andDo(print())
@@ -92,11 +92,11 @@ public class RegistrationTest {
     public void shouldNotRegisterWhenTokenExpired() throws Exception {
         //given
         VerificationToken token = verificationTokenRepository.findByToken(VALID_TOKEN);
-        token.setExpiryDate(DateUtils.setDays(new Date(), 12));
+        token.setExpiryDate(DateUtils.addDays(new Date(), -22));
         verificationTokenRepository.save(token);
 
         //when
-        this.mockMvc.perform(get("/registrationConfirm")
+        this.mockMvc.perform(get("/pplatform/registrationConfirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("token", VALID_TOKEN))
                 .andDo(print())
