@@ -4,7 +4,6 @@ import com.plml.pplatform.users.UserPlatformService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,7 +16,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import static com.plml.pplatform.security.SecurityConstants.*;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -39,7 +37,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter("/pplatform/login", authenticationManager(), userPlatformService))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), userPlatformService));
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()));
                 //TODO
 //                .exceptionHandling().accessDeniedPage("/my-error-page");
     }
@@ -54,7 +52,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration applyPermitDefaultValues = new CorsConfiguration().applyPermitDefaultValues();
     applyPermitDefaultValues.addExposedHeader("Authorization");
-    applyPermitDefaultValues.addExposedHeader("PasswordReset");
     applyPermitDefaultValues.addAllowedMethod(HttpMethod.OPTIONS);
     applyPermitDefaultValues.addAllowedMethod(HttpMethod.PUT);
     applyPermitDefaultValues.addAllowedMethod(HttpMethod.DELETE);

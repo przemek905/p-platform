@@ -7,7 +7,7 @@ public class SecurityConstants {
     static final String AUTHORIZATION_HEADER_STRING = "Authorization";
     static final String SIGN_UP_URL = "/pplatform/signup";
     static final String REGISTRATION_CONFIRM_URL = "/pplatform/registrationConfirm";
-    static final String USER_RESET_PASSWORD_URL = "/pplatform/user/resetPassword";
+    static final String USER_RESET_PASSWORD_URL = "/user/resetPassword";
     public static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
     static final String RESET_PASSWORD_HEADER_STRING = "PasswordReset";
 }

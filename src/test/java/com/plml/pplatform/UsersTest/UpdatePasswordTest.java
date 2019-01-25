@@ -47,7 +47,7 @@ public class UpdatePasswordTest {
 
     @Before
     public void createUserInPlatform() {
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         userPlatformService.saveUser(user);
@@ -56,12 +56,12 @@ public class UpdatePasswordTest {
     @Test
     public void shouldUpdatePasswordWhenLogged() throws Exception {
         //given
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //login first
-        MvcResult result = this.mockMvc.perform(post("/pplatform/login")
+        MvcResult result = this.mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -74,7 +74,7 @@ public class UpdatePasswordTest {
         String authorizationToken = result.getResponse().getHeader(AUTHORIZATION_HEADER);
 
         //when
-        this.mockMvc.perform(get("/pplatform//user/updatePassword")
+        this.mockMvc.perform(get("/user/updatePassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION_HEADER, TOKEN_PREFIX + authorizationToken)
                 .param("password", NEW_PASSWORD)
@@ -87,12 +87,12 @@ public class UpdatePasswordTest {
     @Test
     public void shouldNotUpdatePasswordWhenOldPasswordInvalid() throws Exception {
         //given
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test", "role");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, "testmail@vp.pl", "test");
 
         String requestJson = TestUtils.makeJsonFromObject(user);
 
         //login first
-        MvcResult result = this.mockMvc.perform(post("/pplatform/login")
+        MvcResult result = this.mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andDo(print())
@@ -105,7 +105,7 @@ public class UpdatePasswordTest {
         String authorizationToken = result.getResponse().getHeader(AUTHORIZATION_HEADER);
 
         //when
-        this.mockMvc.perform(get("/pplatform/user/updatePassword")
+        this.mockMvc.perform(get("/user/updatePassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION_HEADER, TOKEN_PREFIX + authorizationToken)
                 .param("password", NEW_PASSWORD)
@@ -119,7 +119,7 @@ public class UpdatePasswordTest {
     public void shouldNotUpdatePasswordWhenNotLogin() throws Exception {
 
         //when
-        this.mockMvc.perform(get("/pplatform/user/updatePassword")
+        this.mockMvc.perform(get("/user/updatePassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("password", NEW_PASSWORD)
                 .param("oldPassword", INVAID_PASSWORD))
