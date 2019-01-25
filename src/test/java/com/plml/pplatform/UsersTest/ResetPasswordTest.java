@@ -52,7 +52,7 @@ public class ResetPasswordTest {
 
     @Before
     public void createUserInPlatform() {
-        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, VALID_EMAIL, "test");
+        ApplicationUser user = new ApplicationUser(1, "testuser", VALID_TEST_PASSWORD, VALID_EMAIL, "test", "role");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         userPlatformService.saveUser(user);
@@ -67,13 +67,13 @@ public class ResetPasswordTest {
         assertTrue(bCryptPasswordEncoder.matches(VALID_TEST_PASSWORD, password));
 
         //when
-        this.mockMvc.perform(get("/user/resetPassword")
+        this.mockMvc.perform(get("/pplatform/user/resetPassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("email", VALID_EMAIL))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("testuser")))
-                .andExpect(content().string(containsString("\"passwordReseted\":true")));
+                .andExpect(content().string(containsString("\"passwordReset\":true")));
 
         //then
         user = userPlatformService.getUserByEmail(VALID_EMAIL);

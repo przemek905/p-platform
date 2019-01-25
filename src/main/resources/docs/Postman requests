@@ -1,6 +1,6 @@
 Sign-on
 
-localhost:8981/signup
+localhost:8981/pplatform/signup
 
 {
 	"username" : "user",
@@ -12,7 +12,7 @@ localhost:8981/signup
 
 Login
 
-localhost:8981/login
+localhost:8981/pplatform/login
 
 {
 	"username" : "przemek905",

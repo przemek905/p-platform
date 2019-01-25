@@ -91,8 +91,7 @@ public class UserController {
     @GetMapping("/user/updatePassword")
     public PPlatformResponse changeUserPassword(@RequestParam("password") String password,
                                                 @RequestParam("oldPassword") String oldPassword) {
-        ApplicationUser user = userPlatformService.getUserByUsername(
-                SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        ApplicationUser user = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!userUtils.isValidOldPassword(user, oldPassword)) {
             throw new InvalidOldPasswordException("Old password is incorrect",

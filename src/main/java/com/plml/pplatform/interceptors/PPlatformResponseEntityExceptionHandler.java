@@ -23,11 +23,11 @@ public class PPlatformResponseEntityExceptionHandler extends ResponseEntityExcep
     private static final Logger LOGGER = LoggerFactory.getLogger(PPlatformResponseEntityExceptionHandler.class);
 
     @ExceptionHandler({TokenNotExistException.class, TokenExpiredException.class, InvalidOldPasswordException.class})
-    public ResponseEntity<?> handleTokenNotExist(RuntimeException ex, WebRequest request) {
-        LOGGER.info("Handle business exception");
+    public ResponseEntity<?> handlePasswordExceptions(RuntimeException ex, WebRequest request) {
+        LOGGER.info("Handle business exception" + ex);
         PPlatformException exception = (PPlatformException) ex;
 
-        PPlatformResponse platformResponse = new PPlatformResponse(exception.getMessage(), "Token not found",
+        PPlatformResponse platformResponse = new PPlatformResponse(exception.getMessage(), "Problem with user password process",
                 exception.getErrCode());
 
         return handleExceptionInternal(

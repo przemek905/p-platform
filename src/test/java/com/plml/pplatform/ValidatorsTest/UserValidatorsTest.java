@@ -31,10 +31,10 @@ public class UserValidatorsTest {
     public void shouldValidateDuplicatedLogin() throws Exception {
         // given
         String login = "testuser";
-        ApplicationUser predefinedUser = new ApplicationUser(1, login, "testpassword", "testmail@vp.pl", "test");
+        ApplicationUser predefinedUser = new ApplicationUser(1, login, "testpassword", "testmail@vp.pl", "test", "role");
         userPlatformService.saveUser(predefinedUser);
         // when
-        ApplicationUser newUser = new ApplicationUser(1, login, "anothertestpassword2", "anothertestmail2@vp.pl", "test");
+        ApplicationUser newUser = new ApplicationUser(1, login, "anothertestpassword2", "anothertestmail2@vp.pl", "test", "role");
         Set<ConstraintViolation<ApplicationUser>> violations = validator.validate(newUser);
         // then
         assertEquals(1, violations.size());
@@ -46,10 +46,10 @@ public class UserValidatorsTest {
     public void shouldValidateDuplicatedEmail() throws Exception {
         // given
         String email = "testuser@pp.pl";
-        ApplicationUser predefinedUser = new ApplicationUser(1, "user", "testpassword", email, "test");
+        ApplicationUser predefinedUser = new ApplicationUser(1, "user", "testpassword", email, "test", "role");
         userPlatformService.saveUser(predefinedUser);
         // when
-        ApplicationUser newUser = new ApplicationUser(1, "newUser", "anothertestpassword2", email, "test");
+        ApplicationUser newUser = new ApplicationUser(1, "newUser", "anothertestpassword2", email, "test", "role");
         Set<ConstraintViolation<ApplicationUser>> violations = validator.validate(newUser);
         // then
         assertEquals(1, violations.size());
